@@ -1,0 +1,30 @@
+class Solution {
+    List<Integer> list=new ArrayList<>();
+    public boolean isValidBST(TreeNode root) {
+        inorder(root);
+       
+        HashSet<Integer> h=new HashSet<>(list);
+        List<Integer> lis=new ArrayList<>();
+
+        for(Integer e:h){
+            lis.add(e);
+
+        }
+        Collections.sort(lis);
+        if(lis.equals(list)){
+            return true;
+        }
+        return false;
+       
+        
+    }
+    public void inorder(TreeNode root){
+            if(root==null){
+                return;
+            }
+            inorder(root.left);
+            list.add(root.val);
+            inorder(root.right);
+        }
+    
+}
