@@ -1,0 +1,24 @@
+class Solution {
+List<Integer> list = new ArrayList<>();
+public TreeNode increasingBST(TreeNode root) {
+inOrder(root);
+TreeNode curr = new TreeNode(list.get(0));
+TreeNode k=curr;
+for(int i = 1 ; i<list.size() ; i++){
+if(curr.right == null){
+TreeNode c = new TreeNode(list.get(i));
+curr.right = c;
+curr = c;
+}
+}
+return k;
+}
+public void inOrder(TreeNode root){
+if(root==null){
+return ;
+}
+inOrder(root.left);
+list.add(root.val);
+inOrder(root.right);
+}
+}
