@@ -1,0 +1,39 @@
+class Solution {
+    HashMap<Integer,Integer> map = new HashMap<>();
+    List<Integer> list = new ArrayList<>();
+    public TreeNode bstToGst(TreeNode root) {
+        inord(root);
+        for(int i=0;i<list.size();i++){
+            int sum=0;
+            for(int j=i;j<list.size();j++){
+                sum = sum+list.get(j);
+            }
+            map.put(list.get(i),sum);
+        }
+        inorder(root);
+        System.out.print(map);
+        return root;
+        
+        
+
+        
+    }
+    public void inord(TreeNode root){
+        if(root==null)
+        {
+            return ;
+        }
+        inord(root.left);
+        list.add(root.val);
+        inord(root.right);
+    }
+    public void inorder(TreeNode root){
+        if(root==null)
+        {
+            return ;
+        }
+        inorder(root.left);
+        root.val=map.get(root.val);
+        inorder(root.right);
+    }
+}
