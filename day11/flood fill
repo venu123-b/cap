@@ -1,0 +1,64 @@
+class pair{
+    int r;
+    int c;
+    int t;
+    pair(int r,int c,int t){
+        this.r=r;
+        this.c=c;
+        this.t=t;
+    }
+}
+class Solution {
+    public void mint(int[][] grid,int sr,int sc,int color){
+        int n=grid.length;
+        int m =grid[0].length;
+        Queue<pair> q=new LinkedList<>();
+        int[][] vis=new int[n][m];
+        int freshOrange=0;
+        int x=grid[sr][sc];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(i==sr && sc==j && grid[i][j]!=color){
+                    
+                    q.add(new pair(i,j,0));
+                    grid[i][j]=color;
+                    vis[i][j]=color;
+                }
+                else{
+                    vis[i][j]=0;
+                }
+            }
+        }
+        int ans =0;
+        int ch=0;
+        int del[]={ -1,1,0,0};
+        int cel[]={0,0,1,-1};
+        while(!q.isEmpty()){
+            int row=q.peek().r;
+            int col=q.peek().c;
+            int tim=q.peek().t;
+             ans=Math.max(ans,tim);
+            q.remove();
+            for(int i=0;i<4;i++){
+                int nrow=row+del[i];
+                int ncol=col+cel[i];
+if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && vis[nrow][ncol]==0 && grid[nrow][ncol]==x){
+                    q.add(new pair(nrow,ncol,tim+1));
+                    grid[nrow][ncol]=color;
+                    vis[nrow][ncol]=color;
+                    ch++;
+                }
+               
+            }
+
+        }
+    }
+       
+        
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) {
+        mint(image,sr,sc,color);
+         return image;
+
+        
+    }
+}
