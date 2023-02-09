@@ -1,0 +1,69 @@
+class three{
+    int time;
+    int row;
+    int col;
+    three(int time,int row,int col){
+        this.time=time;
+        this.row=row;
+        this.col=col;
+    }
+}
+class Solution {
+    public int orangesRotting(int[][] grid) {
+        List<Integer> ans = new ArrayList<>();
+        Queue<three>queue = new LinkedList<>();
+        int rows=grid.length;
+        int cols=grid[0].length;
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                if(grid[i][j]==2){
+                    queue.add(new three(0,i,j));
+                }
+            }
+        }
+        
+        while(!queue.isEmpty()){ 
+            three curr=queue.poll();
+            ans.add(curr.time);          
+            if(curr.row<rows && curr.row>=0 && curr.col+1<cols && curr.col+1>=0){
+                if(grid[curr.row][curr.col+1]==1){
+                    grid[curr.row][curr.col+1]=2;
+                    queue.add(new three(curr.time+1,curr.row,curr.col+1));
+                }
+            }
+            if(curr.row+1<rows && curr.row+1>=0 && curr.col<cols && curr.col>=0){
+                if(grid[curr.row+1][curr.col]==1){
+                    grid[curr.row+1][curr.col]=2;
+                    queue.add(new three(curr.time+1,curr.row+1,curr.col));
+                }
+            }
+            if(curr.row<rows && curr.row>=0 && curr.col-1<cols && curr.col-1>=0){
+                if(grid[curr.row][curr.col-1]==1){
+                    grid[curr.row][curr.col-1]=2;
+                    queue.add(new three(curr.time+1,curr.row,curr.col-1));
+                }
+            }
+            if(curr.row-1<rows && curr.row-1>=0 && curr.col<cols && curr.col>=0){
+                if(grid[curr.row-1][curr.col]==1){
+                    grid[curr.row-1][curr.col]=2;
+                    queue.add(new three(curr.time+1,curr.row-1,curr.col));
+                }
+            }
+            System.out.print(curr.time+" ");
+        }
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                if(grid[i][j]==1){
+                    return -1;
+                }
+            }
+        }
+        
+
+        if(ans.size()>0){
+            return ans.get(ans.size()-1);
+        }
+        return 0;
+        //return 1;
+    }
+}
